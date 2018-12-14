@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %> | <%= bot.user.username %></title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get all "navbar-burger" elements
+        var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+          // Add a click event on each of them
+          $navbarBurgers.forEach(function ($el) {
+            $el.addEventListener('click', function () {
+              // Get the target from the "data-target" attribute
+              var target = $el.dataset.target;
+              var $target = document.getElementById(target);
+              // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+              $el.classList.toggle('is-active');
+              $target.classList.toggle('is-active');
+            });
+          });
+        }
+      });
+    </script>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/css/bulma.css' />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-87DrmpqHRiY8hPLIr7ByqhPIywuSsjuQAfMXAE0sMUpY3BM7nXjf+mLIUSvhDArs" crossorigin="anonymous">
+	<%- include ../partials/includes/header.ejs %>
+  </head>
+  <body>
+	<% if (successlogout) { %>
+		<div class="notification is-primary" style="border-radius: 0px; margin: 0px;">
+			Successfully logged out.
+		</div>
+	<% } %>
+	<%- include ../partials/includes/navbar.ejs %>
+    <section class="hero is-melonian">
+      <div class="hero-body">
+        <div class="container">
+          <img class="is-pulled-left circle" style="margin-right: 25px; box-shadow: 0px 0px 5px #222;" src="/img/logo.png" />
+          <h1 class="title">
+            <b><%= bot.user.username %></b>
+          </h1>
+          <h2 class="subtitle" style="color: #dedede !important;">
+            A jack-of-all-trades Discord bot.
+          </h2>
+          <% if (config.inviteLink.enabled) { %>
+            <a class="button is-dark is-large" href="https://discordapp.com/oauth2/authorize?&client_id=<%= config.inviteLink.client_id %>&scope=bot&permissions=<%= config.inviteLink.permissions %>">
+              <span class="icon">
+                <i class="fas fa-user-plus"></i>
+              </span>
+              <span>Invite now</span>
+            </a>
+          <% } %>
+			<a class="button is-dark is-large" href="https://discord.gg/<%= process.env.SERVER_INVITE %>">
+              <span class="icon">
+                <i class="fab fa-discord"></i>
+              </span>
+              <span>Join support server</span>
+            </a>
+        </div>
+      </div>
+    </section>
+    <br>
+    <div class="container">
+	  	<h1 class="title">What is <%= process.env.SITE_NAME %>?</h1>
+    	<h2 class="subtitle">Melonian is a jack-of-all-trades Discord bot made in discord.js. It provides many commands, including:</h2>
+	</div>
+	<br>
+    <section class="hero is-dark">
+        <div class="hero-body">
+          <div class="container">
+            <div class="tile is-ancestor is-dark">
+              <div class="tile is-vertical is-dark is-8" style="justify-content: center;">
+                <h1 class="title">Some fun stuff</h1>
+                <h2 class="subtitle" style="line-height: 1.6;">
+                  Need to brighten up your mood? Try some <%= process.env.SITE_NAME %> commands!
+                  <br>
+                  As shown, there is <code><%= config.prefix %>gay</code>, to check how "gai" someone is, <code><%= config.prefix %>8ball</code>, to test if your question is true, and <code><%= config.prefix %>idk</code>, to make <%= process.env.SITE_NAME %> question something.
+				  <br><br>
+              </div>
+              <div class="tile is-parent is-dark" style="justify-content: center;">
+                <div class="tile is-child is-dark">
+                  <img id="mgay" style="border: 2px solid #282f2f; border-radius: 5px;" alt="gay command" src="/img/heroes/funcommands.gif" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="hero">
+        <div class="hero-body">
+          <div class="container">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-8" style="justify-content: center;">
+                <h1 class="title">Make some (virtual) money</h1>
+                <h2 class="subtitle" style="line-height: 1.6; color: rgba(236, 240, 241, 0.9);">
+                  <%= process.env.SITE_NAME %> has an economy system. It uses virtual South Korean Won (₩).
+                  <br>
+                  Use <code><%= config.prefix %>bal</code> to check your current balance, use <code><%= config.prefix %>daily</code> to claim your daily ₩ reward, or use <code><%= config.prefix %>give</code> to give some of your money to another user.
+                  <br>
+                  There is also <code><%= config.prefix %>gamble</code>, if you'd like to leave your money up to RNG.
+				          </h2>
+              </div>
+              <div class="tile is-parent" style="justify-content: center;">
+                <div class="tile is-child">
+                  <img id="mconfig" style="border: 2px solid #282f2f; border-radius: 5px;" alt="config command" src="/img/heroes/economy.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hero is-dark">
+        <div class="hero-body is-dark">
+          <div class="container">
+            <div class="tile is-dark is-ancestor">
+              <div class="tile is-dark is-vertical is-8" style="justify-content: center;">
+                <h1 class="title">Moderate your server better</h1>
+                <h2 class="subtitle" style="line-height: 1.6; color: rgba(236, 240, 241, 0.9);">
+                  <%= process.env.SITE_NAME %> has the basic moderation commands you'd expect from a bot like this.
+                  <br>
+                  <b>You must configure <code>mod_role</code> in <code><%= config.prefix %>config</code> first before you can use these.</b>
+                  <br>
+                  Use <code><%= config.prefix %>warn</code> to warn a member who's being slightly naughty. <code><%= config.prefix %>warnings @user</code> will get you a user's warning list, and <code><%= config.prefix %>removeWarning warning_id</code> will remove a warning.
+                  <br>
+                  There is also the usual <code><%= config.prefix %>kick</code> and <code><%= config.prefix %>ban</code> commands.
+				          </h2>
+               
+              </div>
+              <div class="tile is-parent" style="justify-content: center;">
+                <div class="tile is-child">
+                  <img id="mconfig" style="border: 2px solid #282f2f; border-radius: 5px;" alt="config command" src="/img/heroes/modcommands.gif" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <div class="container">
+      <br>
+      <h1 class="title">Who's using <%= process.env.SITE_NAME %>? (and other data)</h1>
+      <p>Here's the breakdown:</p><br>
+      <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Servers</p>
+            <p class="title"><%= bot.guilds.size %></p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Users</p>
+            <p class="title"><%= bot.users.size %></p>
+          </div>
+        </div>
+		<div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Text channels</p>
+            <p class="title"><%= bot.channels.filter(c => c.type === "text").size %></p>
+          </div>
+        </div>
+		<div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Latest ping</p>
+            <p class="title"><%= Math.round(bot.ping) %>ms</p>
+          </div>
+        </div>
+		<div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Current status</p>
+            <p class="title"><%= bot.user.presence.status.charAt(0).toUpperCase() + bot.user.presence.status.slice(1); %></p>
+          </div>
+        </div>
+      </nav>
+	  </div>
+	  <br>
+      <section class="hero">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Convinced yet?</h1>
+            <h2 class="subtitle">If so, let's get started.</h2>
+            <% if (config.inviteLink.enabled) { %>
+              <a class="button is-large is-discord" href="https://discordapp.com/oauth2/authorize?&client_id=<%= config.inviteLink.client_id %>&scope=bot&permissions=<%= config.inviteLink.permissions %>">
+                <span class="icon">
+                  <i class="fas fa-user-plus"></i>
+                </span>
+                <span>Invite now</span>
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </section>
+    <% include ../partials/includes/footer.ejs %>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<footer class="footer" style="padding: 1rem; padding-top: 2rem;">
+  <div class="container has-text-centered">
+      <p>
+        <% if (bot.user.id != "236987731232686081") { %>
+            <strong><%= bot.user.username %></strong>, based on <%=process.env.botName%>, which was developed by <b>TheRandomMelon & Loli-Bear</b>
+        <% } else { %>
+            <strong><%=process.env.botName%></strong>, developed by <b>TheRandomMelon & Loli-Bear</b>
+        <% } %>
+      </p>
+      <br>
+      <ul class="nav nocolor" style="justify-content: center;">
+        <li class="nav-item">
+			<a href="https://discord.gg/<%=process.env.SERVER_INVITE%>" class="nav-link pl-0">
+                <i class="fab fa-discord fa-lg" aria-hidden="true"></i>
+            </a>
+        </li>
+	  </ul>
+  </div>
+</footer>

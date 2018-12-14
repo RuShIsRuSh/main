@@ -1,0 +1,7 @@
+{
+	"Constants":{
+		"prefix": "constants",
+		"description":"this.client.constants",
+		"body": "${this.client.constants.$1"
+	}
+}

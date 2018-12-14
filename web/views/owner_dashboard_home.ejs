@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %> | <%= bot.user.username %></title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get all "navbar-burger" elements
+        var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+          // Add a click event on each of them
+          $navbarBurgers.forEach(function ($el) {
+            $el.addEventListener('click', function () {
+              // Get the target from the "data-target" attribute
+              var target = $el.dataset.target;
+              var $target = document.getElementById(target);
+              // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+              $el.classList.toggle('is-active');
+              $target.classList.toggle('is-active');
+            });
+          });
+        }
+      });
+    </script>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/css/bulma.css' />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-87DrmpqHRiY8hPLIr7ByqhPIywuSsjuQAfMXAE0sMUpY3BM7nXjf+mLIUSvhDArs" crossorigin="anonymous">
+	<%- include ../partials/includes/header.ejs %>
+  </head>
+  <body>
+    <% include ../partials/includes/navbar.ejs %>
+		<section class="hero is-melonian">
+		  <div class="hero-body">
+			<div class="container">
+				<i class="fas fa-tachometer-alt is-pulled-left fa-4x" style="padding-right: 15px;"></i>
+				<h1 class="title">
+					<b>Owner Dashboard</b>
+				</h1>
+				<h2 class="subtitle" style="color: #dedede !important;">
+					Configure any server <%= process.env.SITE_NAME %> is in.
+				</h2>
+			</div>
+		  </div>
+		</section>
+    <div class="container" style="margin: 15px auto;">
+		<h1 class="title">Select a server to configure</h1>
+		<hr />
+		<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th>Owner</th>
+			  <th>Member count</th>
+			  <th>Configure</th>
+			  <th>Quick Actions</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<% for (var i in bot.guilds.array()) { %>
+				<tr>
+					<th style="vertical-align: middle;"><%= bot.guilds.array()[i].name %>
+						<% if (bot.guilds.array()[i].settings.certified) { %>
+							<span class="tag is-small is-melonian" style="margin-left: 5px; font-weight: normal;"><i class="fas fa-shield-check" style="margin-right: 5px;"></i> Certified</span>
+						<% } %>
+					</th>
+					<td style="vertical-align: middle;">
+						<% if (bot.guilds.array()[i].ownerID != authUser.id) { %>
+							No
+						<% } else { %>
+							Yes
+						<% } %>
+					</td>
+					<td style="vertical-align: middle;">
+						<%= bot.guilds.array()[i].members.size %>
+					</td>
+					<td style="vertical-align: middle;">
+						<a class="button is-melonian is-small" href="/owner-dashboard/configure/?s=<%= bot.guilds.array()[i].id %>">Configure</a>
+					</td>
+					<td style="vertical-align: middle;">
+						<% if (bot.guilds.array()[i].settings.certified) { %>
+							<form name="frmquick" method="POST" action="/owner-dashboard/applySettings">
+								<input type="hidden" name="s" value="<%= bot.guilds.array()[i].id %>">
+								<input type="hidden" name="makeCertified" value="off">
+								<input type="submit" class="button is-danger is-small" value="Uncertify">
+							</form>
+						<% } else { %>
+							<form name="frmquick" method="POST" action="/owner-dashboard/applySettings">
+								<input type="hidden" name="s" value="<%= bot.guilds.array()[i].id %>">
+								<input type="hidden" name="makeCertified" value="on">
+								<input type="submit" class="button is-success is-small" value="Certify">
+							</form>
+						<% } %>
+					</td>
+				</tr>
+			<% } %>
+		  </tbody>
+		</table>
+    </div>
+    <% include ../partials/includes/footer.ejs %>
+  </body>
+</html>
+

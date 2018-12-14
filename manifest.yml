@@ -1,0 +1,4 @@
+  applications:
+  - name: akairo
+    random-route: true
+    memory: 500M
